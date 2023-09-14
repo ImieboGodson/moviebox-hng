@@ -20,8 +20,8 @@ const HomeClient = () => {
   const router = useRouter();
 
   return (
-    <main className="min-w-screen min-h-screen flex-col items-center justify-center">
-      <header className="relative w-full h-screen">
+    <main className="-mt-24 min-w-screen min-h-screen flex-col items-center justify-center">
+      <header className="relative w-full h-[110vh]">
         <Image
           src="/images/poster.png"
           fill

@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams, usePathname } from "next/navigation";
 import Container from "../Container";
 import Logo from "../Logo";
 import Search from "./Search";
@@ -7,10 +8,21 @@ import Search from "./Search";
 import { HiMiniBars2 } from "react-icons/hi2";
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const params = useParams();
+
+  if (params.movieId) {
+    return;
+  }
+
   return (
-    <div className="fixed top-0 right-0 left-0 w-full bg-transparent z-50">
+    <div className="relative w-full bg-transparent z-50">
       <Container>
-        <div className="w-full py-4 grid grid-cols-4 gap-2 text-white">
+        <div
+          className={`w-full py-4 grid grid-cols-4 gap-2 ${
+            pathname.includes("movies") ? "text-black" : "text-white"
+          } `}
+        >
           <div className="col-span-1 flex flex-row items-center justify-start ">
             <Logo />
           </div>
