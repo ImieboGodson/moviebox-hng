@@ -1,7 +1,16 @@
+import ClientOnly from "./components/ClientOnly";
+import Footer from "./components/footer/Footer";
+import Navbar from "./components/navbar/Navbar";
+import HomeClient from "./HomeClient";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      WELCOME TO MOVIEBOX.
-    </main>
+    <>
+      <Navbar />
+      <ClientOnly>
+        <HomeClient />
+      </ClientOnly>
+      <Footer />
+    </>
   );
 }

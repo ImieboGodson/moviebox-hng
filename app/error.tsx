@@ -15,14 +15,14 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error }) => {
   }, [error]);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden flex flex-col justify-center items-center bg-white text-black ">
-      <div className="w-fit h-fit text-[12.5rem] font-bold tracking-widest">
-        404
+    <div className="relative w-screen h-screen overflow-hidden flex flex-col gap-4 justify-center items-center bg-white text-black ">
+      <div className="w-fit h-fit text-xl font-bold tracking-widest">
+        Oh oh! This is embarrasing, something went terribly wrong.
       </div>
       <div className="flex flex-row justify-center items-center">
         <p
           onClick={() => router.refresh()}
-          className="text-sm font-light underline"
+          className="text-sm font-light underline cursor-pointer"
         >
           Try again
         </p>
