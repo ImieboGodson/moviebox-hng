@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useCallback, useState } from "react";
 // import useFavorite from "../hooks/useFavorite";
 // import { SafeUser } from "../types";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -18,9 +18,19 @@ const HeartButton: React.FC<HeartButtonProps> = ({ currentUser, movieId }) => {
   //   });
 
   // const isFavorited = true;
+
+  const handleFavorite = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+
+      setIsFavorited(!isFavorited);
+    },
+    [isFavorited]
+  );
+
   return (
     <div
-      onClick={() => setIsFavorited(!isFavorited)}
+      onClick={handleFavorite}
       className="p-1.5 bg-neutral-300/80 rounded-full hover:opacity-70"
     >
       <div className="relative transition cursor-pointer">

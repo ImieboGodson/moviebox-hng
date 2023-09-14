@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Container from "../Container";
 
 import {
@@ -9,8 +10,11 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import SocialButton from "./SocialButton";
+import Link from "next/link";
 
 const Footer = () => {
+  const router = useRouter();
+
   return (
     <div className="mt-12 w-full bg-transparent">
       <Container>
@@ -29,16 +33,34 @@ const Footer = () => {
               <SocialButton link="https://twitter.com/home" icon={FaYoutube} />
             </div>
             <div className="flex flex-row gap-7 items-center">
-              <div className="text-xs font-bold cursor-pointer">
+              <div
+                onClick={() => router.push("/")}
+                className="text-xs font-bold cursor-pointer"
+              >
                 Conditions of Use
               </div>
-              <div className="text-xs font-bold cursor-pointer">
+              <div
+                onClick={() => router.push("/")}
+                className="text-xs font-bold cursor-pointer"
+              >
                 Privacy & Policy
               </div>
-              <div className="text-xs font-bold cursor-pointer">Press Room</div>
+              <div
+                onClick={() => router.push("/")}
+                className="text-xs font-bold cursor-pointer"
+              >
+                Press Room
+              </div>
             </div>
             <div className="text-xs font-light text-neutral-500">
-              2021 MovieBox by Godson Imiebo
+              &copy; 2023 MovieBox with ❤️ by{" "}
+              <Link
+                href="https://github.com/ImieboGodson"
+                target="blank"
+                className="font-semibold text-neutral-700 hover:underline"
+              >
+                Godson Imiebo
+              </Link>
             </div>
           </div>
         </div>

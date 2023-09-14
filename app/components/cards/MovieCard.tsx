@@ -1,8 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
 import { Movie } from "@/types";
 import Image from "next/image";
 import HeartButton from "../HeartButton";
+import { useRouter } from "next/navigation";
 
 interface MovieCardProps {
   currentUser?: {} | null;
@@ -10,8 +12,24 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
+  const router = useRouter();
+
+  const releaseDate = useMemo(() => {
+    if (!data.release_date) {
+      return;
+    }
+
+    const date = new Date(data.release_date);
+
+    return date.getUTCFullYear();
+  }, [data]);
+
   return (
-    <div className="group w-full flex flex-col gap-4 cursor-pointer">
+    <div
+      data-testid="movie-card"
+      onClick={() => router.push(`/movies/${data.id}`)}
+      className="group w-full flex flex-col gap-4 cursor-pointer"
+    >
       <div className="relative w-full aspect-2/3 overflow-hidden">
         <div className="absolute top-3 right-4 z-20">
           <HeartButton movieId={data.id} currentUser={currentUser} />
@@ -20,14 +38,24 @@ const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
           src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
           alt="movie poster"
           fill
-          className="object-cover group-hover:scale-125 transition"
+          data-testid="movie-poster"
+          className="object-cover group-hover:scale-110 transition"
         />
       </div>
       <div className="w-full flex flex-col gap-4 items-start">
-        <div className="text-xs font-semibold text-neutral-400">
-          USA, 2016 - Current
+        <div className="flex flex-row gap-1 items-center">
+          <div className="text-xs font-semibold text-neutral-400">USA,</div>
+          <div
+            data-testid="movie-release-date"
+            className="text-xs font-semibold text-neutral-400"
+          >
+            {releaseDate}
+          </div>
         </div>
-        <div className="text-sm font-bold">{data.title}</div>
+
+        <div data-testid="movie-title" className="text-sm font-bold">
+          {data.title}
+        </div>
         <div className="w-full flex flex-row justify-between items-center">
           <div className="flex flex-row gap-2 items-center">
             <Image
@@ -37,7 +65,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
               alt="imdb icon"
             />
             <div className="flex flex-row text-xs font-extralight">
-              86.0 / 100
+              {data.vote_average} / 10
             </div>
           </div>
           <div className="flex flex-row gap-2 items-center">
@@ -47,7 +75,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
               width={16}
               alt="rotten tomato icon"
             />
-            <div className="flex flex-row text-xs font-extralight">97%</div>
+            <div className="flex flex-row text-xs font-extralight">
+              {data.vote_average * 10}%
+            </div>
           </div>
         </div>
         <div className="text-xs font-semibold text-neutral-400">
