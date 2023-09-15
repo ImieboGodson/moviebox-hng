@@ -3,9 +3,8 @@ import getTopRatedMovies from "./actions/getTopRatedMovies";
 import ClientOnly from "./components/ClientOnly";
 import HomeClient from "./HomeClient";
 
-export default async function Home() {
+const Home = async () => {
   const topRatedMovies = await getTopRatedMovies();
-
   const popularMovies = await getPopularMovies();
 
   return (
@@ -16,4 +15,6 @@ export default async function Home() {
       />
     </ClientOnly>
   );
-}
+};
+
+export default Home;

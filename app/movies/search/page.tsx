@@ -10,7 +10,7 @@ interface SearchPageProps {
   searchParams: ISearchParams;
 }
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const results = await getSearchResults(searchParams);
 
   if (!results) {
@@ -22,6 +22,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       </ClientOnly>
     );
   }
+
   return (
     <ClientOnly>
       <Container>
@@ -29,4 +30,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       </Container>
     </ClientOnly>
   );
-}
+};
+
+export default SearchPage;

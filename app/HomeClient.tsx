@@ -23,7 +23,6 @@ const HomeClient: React.FC<HomeClientProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [popularArray, setpopularArray] = useState(popularMovies);
-  const numbers = [1, 2, 3, 4, 5];
   const router = useRouter();
 
   const changeShowing = useCallback(() => {
@@ -54,40 +53,26 @@ const HomeClient: React.FC<HomeClientProps> = ({
           className="object-cover w-full h-full -z-10 transition"
         />
         <div className="relative w-full h-full md:pt-24 bg-transparent  z-0">
-          <div className="absolute right-0 top-0 bottom-0 flex flex-col justify-center">
-            <div className="p-2 flex flex-col items-end gap-2 border border-white">
-              {numbers.map((number) => {
-                return (
-                  <div
-                    key={number}
-                    className="flex flex-row items-center gap-1 transition"
-                  >
-                    <div
-                      className={`text-lg font-extrabold ${
-                        currentIndex === number ? "block" : "hidden"
-                      }`}
-                    >
-                      <Image
-                        src="/images/dash.svg"
-                        height={16}
-                        width={16}
-                        alt="dash"
-                      />
-                    </div>
-                    <div
-                      className={`${
-                        currentIndex === number
-                          ? "text-xl font-extrabold text-white"
-                          : "text-sm font-light text-neutral-400"
-                      }`}
-                    >
-                      {number}
-                    </div>
-                  </div>
-                );
-              })}
+          {/* <div className="absolute right-0 top-0 bottom-0 flex flex-col justify-center">
+            <div className="p-2 flex flex-col items-end gap-2">
+              <div
+                key={currentIndex}
+                className="pr-2 flex flex-row items-center gap-1 transition"
+              >
+                <div className={`text-lg font-extrabold`}>
+                  <Image
+                    src="/images/dash.svg"
+                    height={16}
+                    width={16}
+                    alt="dash"
+                  />
+                </div>
+                <div className={`text-3xl font-extrabold text-white`}>
+                  {currentIndex}
+                </div>
+              </div>
             </div>
-          </div>
+          </div> */}
           <Container>
             <div className="w-full h-[60vh] bg-transparent flex gap-4 flex-col items-start justify-center ">
               <div className="w-[28%] py-5 flex gap-4 flex-col text-white bg-transparent">

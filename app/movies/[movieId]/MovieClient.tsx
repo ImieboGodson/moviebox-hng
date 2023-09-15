@@ -124,32 +124,36 @@ const MovieClient: React.FC<MovieClientProps> = ({ data }) => {
                 {data.overview}
               </div>
               <div className="flex flex-col gap-4 items-start">
-                <div className="flex flex-row gap-1 items-center">
-                  <div className="text-base text-neutral-600">Director :</div>
-                  <div
-                    key={findCast?.director.id}
-                    className="text-base text-rose-700"
-                  >
-                    {findCast?.director.name}
-                  </div>
-                </div>
-                <div className="flex flex-row gap-1 items-center">
-                  <div className="text-base text-neutral-600">Writers :</div>
-                  <div
-                    key={findCast?.writers[0].id}
-                    className="text-base text-rose-700"
-                  >
-                    {findCast?.writers[0].name}
-                  </div>
-                  {findCast?.writers[2] && (
+                {findCast?.director && (
+                  <div className="flex flex-row gap-1 items-center">
+                    <div className="text-base text-neutral-600">Director :</div>
                     <div
-                      key={findCast?.writers[2].id}
+                      key={findCast?.director.id}
                       className="text-base text-rose-700"
                     >
-                      {findCast?.writers[2].name}
+                      {findCast?.director.name}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+                {findCast?.writers[0] && (
+                  <div className="flex flex-row gap-1 items-center">
+                    <div className="text-base text-neutral-600">Writers :</div>
+                    <div
+                      key={findCast?.writers[0].id}
+                      className="text-base text-rose-700"
+                    >
+                      {findCast?.writers[0].name}
+                    </div>
+                    {findCast?.writers[2] && (
+                      <div
+                        key={findCast?.writers[2].id}
+                        className="text-base text-rose-700"
+                      >
+                        {findCast?.writers[2].name}
+                      </div>
+                    )}
+                  </div>
+                )}
                 <div className="flex flex-row gap-1 items-center">
                   <div className="text-base text-neutral-600">Stars :</div>
                   <div
@@ -184,21 +188,23 @@ const MovieClient: React.FC<MovieClientProps> = ({ data }) => {
                 </div>
               </div>
             </div>
-            <div className="col-span-1 flex flex-col gap-3 items-start">
-              <div className="w-full h-[8vh]">
-                <Button
-                  label="See Showtimes"
-                  icon={IoMdPricetags}
-                  onClick={() => {}}
-                />
-              </div>
-              <div className="w-full h-[8vh]">
-                <Button
-                  label="More watch options"
-                  icon={IoIosList}
-                  onClick={() => {}}
-                  outline
-                />
+            <div className="col-span-1 flex flex-col items-start justify-between">
+              <div className="w-full flex flex-col gap-3 items-start">
+                <div className="w-full h-[8vh]">
+                  <Button
+                    label="See Showtimes"
+                    icon={IoMdPricetags}
+                    onClick={() => {}}
+                  />
+                </div>
+                <div className="w-full h-[8vh]">
+                  <Button
+                    label="More watch options"
+                    icon={IoIosList}
+                    onClick={() => {}}
+                    outline
+                  />
+                </div>
               </div>
               <div className="relative mt-3 w-full h-[32vh] rounded-lg overflow-hidden">
                 <Image
