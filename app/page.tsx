@@ -1,10 +1,19 @@
+import getPopularMovies from "./actions/getPopularMovies";
+import getTopRatedMovies from "./actions/getTopRatedMovies";
 import ClientOnly from "./components/ClientOnly";
 import HomeClient from "./HomeClient";
 
-export default function Home() {
+export default async function Home() {
+  const topRatedMovies = await getTopRatedMovies();
+
+  const popularMovies = await getPopularMovies();
+
   return (
     <ClientOnly>
-      <HomeClient />
+      <HomeClient
+        topRatedMovies={topRatedMovies}
+        popularMovies={popularMovies}
+      />
     </ClientOnly>
   );
 }

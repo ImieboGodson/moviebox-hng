@@ -5,6 +5,7 @@ import { Movie } from "@/types";
 import Image from "next/image";
 import HeartButton from "../HeartButton";
 import { useRouter } from "next/navigation";
+import formateDate from "@/app/libs/formatDate";
 
 interface MovieCardProps {
   currentUser?: {} | null;
@@ -13,16 +14,6 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
   const router = useRouter();
-
-  const releaseDate = useMemo(() => {
-    if (!data.release_date) {
-      return;
-    }
-
-    const date = new Date(data.release_date);
-
-    return date.getUTCFullYear();
-  }, [data]);
 
   return (
     <div
@@ -49,7 +40,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
             data-testid="movie-release-date"
             className="text-xs font-semibold text-neutral-400"
           >
-            {releaseDate}
+            {formateDate(data.release_date)}
           </div>
         </div>
 
@@ -65,7 +56,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
               alt="imdb icon"
             />
             <div className="flex flex-row text-xs font-extralight">
-              {data.vote_average} / 10
+              {data.vote_average.toFixed(1)} / 10
             </div>
           </div>
           <div className="flex flex-row gap-2 items-center">
@@ -76,7 +67,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ currentUser, data }) => {
               alt="rotten tomato icon"
             />
             <div className="flex flex-row text-xs font-extralight">
-              {data.vote_average * 10}%
+              {(data.vote_average * 10).toFixed()}%
             </div>
           </div>
         </div>

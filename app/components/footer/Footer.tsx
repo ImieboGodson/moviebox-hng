@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Container from "../Container";
 
 import {
@@ -14,6 +14,11 @@ import Link from "next/link";
 
 const Footer = () => {
   const router = useRouter();
+  const params = useParams();
+
+  if (params.movieId) {
+    return null;
+  }
 
   return (
     <div className="mt-12 w-full bg-transparent">

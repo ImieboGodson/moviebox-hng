@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Container from "./components/Container";
@@ -9,21 +9,46 @@ import Button from "./components/Button";
 import { BsDashLg, BsPlayCircleFill } from "react-icons/bs";
 import { FiChevronRight } from "react-icons/fi";
 import EmptyState from "./components/EmptyState";
-import { results } from "@/db.json";
 import MovieCard from "./components/cards/MovieCard";
+import { Movie } from "@/types";
 
-const HomeClient = () => {
-  const [activeIndex, setActiveIndex] = useState(3);
-  const [featuredMovies, setFeaturedMovies] = useState(results);
+interface HomeClientProps {
+  topRatedMovies: Movie[];
+  popularMovies: Movie[];
+}
+
+const HomeClient: React.FC<HomeClientProps> = ({
+  topRatedMovies,
+  popularMovies,
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [popularArray, setpopularArray] = useState(popularMovies);
   const numbers = [1, 2, 3, 4, 5];
-
   const router = useRouter();
+
+  const changeShowing = useCallback(() => {
+    if (currentIndex === popularArray.length) {
+      setCurrentIndex(0);
+    }
+
+    setCurrentIndex((value) => value + 1);
+  }, [currentIndex, popularArray]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      changeShowing();
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, [changeShowing]);
 
   return (
     <main className="-mt-24 min-w-screen min-h-screen flex-col items-center justify-center">
       <header className="relative w-full h-[110vh]">
         <Image
-          src="/images/poster.png"
+          src={`https://image.tmdb.org/t/p/original${
+            popularArray[currentIndex - 1].backdrop_path
+          }`}
           fill
           alt="movie backdrop"
           className="object-cover w-full h-full -z-10 transition"
@@ -39,7 +64,7 @@ const HomeClient = () => {
                   >
                     <div
                       className={`text-lg font-extrabold ${
-                        activeIndex === number ? "block" : "hidden"
+                        currentIndex === number ? "block" : "hidden"
                       }`}
                     >
                       <Image
@@ -51,7 +76,7 @@ const HomeClient = () => {
                     </div>
                     <div
                       className={`${
-                        activeIndex === number
+                        currentIndex === number
                           ? "text-xl font-extrabold text-white"
                           : "text-sm font-light text-neutral-400"
                       }`}
@@ -67,7 +92,7 @@ const HomeClient = () => {
             <div className="w-full h-[60vh] bg-transparent flex gap-4 flex-col items-start justify-center ">
               <div className="w-[28%] py-5 flex gap-4 flex-col text-white bg-transparent">
                 <h1 className="text-5xl/tight font-bold">
-                  John Wick 3: Parabellum
+                  {popularArray[currentIndex - 1].title}
                 </h1>
                 <div className="w-full flex gap-10 flex-row justify-start items-center">
                   <div className="flex flex-row gap-2 items-center">
@@ -78,7 +103,7 @@ const HomeClient = () => {
                       alt="imdb icon"
                     />
                     <div className="flex flex-row text-xs font-extralight">
-                      86.0 / 100
+                      {popularArray[currentIndex - 1].vote_average} / 10
                     </div>
                   </div>
                   <div className="flex flex-row gap-2 items-center">
@@ -89,22 +114,21 @@ const HomeClient = () => {
                       alt="rotten tomato icon"
                     />
                     <div className="flex flex-row text-xs font-extralight">
-                      97%
+                      {popularArray[currentIndex - 1].vote_average * 10}%
                     </div>
                   </div>
                 </div>
                 <div className="w-full text-xs font-extralight">
-                  <p>
-                    John Wick is on the run after killing a member of the
-                    international assassins&apos; guild, and with a $14 million
-                    price tag on his head, he is the target of hit men and women
-                    everywhere.
-                  </p>
+                  <p>{popularArray[currentIndex - 1].overview}</p>
                 </div>
                 <div className="w-[55%]">
                   <Button
                     label="WATCH TRAILER"
-                    onClick={() => {}}
+                    onClick={() =>
+                      router.push(
+                        `/movies/${popularArray[currentIndex - 1].id}`
+                      )
+                    }
                     icon={BsPlayCircleFill}
                   />
                 </div>
@@ -127,7 +151,7 @@ const HomeClient = () => {
               </div>
             </div>
             <div className="w-full">
-              {!featuredMovies ? (
+              {!topRatedMovies ? (
                 <EmptyState
                   title="No featured Movies"
                   subtitle="Try refreshing the page."
@@ -136,10 +160,15 @@ const HomeClient = () => {
                 />
               ) : (
                 <div className="w-full grid gap-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-                  <MovieCard currentUser={null} data={results[0]} />
-                  <MovieCard currentUser={null} data={results[1]} />
-                  <MovieCard currentUser={null} data={results[2]} />
-                  <MovieCard currentUser={null} data={results[3]} />
+                  {topRatedMovies.map((movie) => {
+                    return (
+                      <MovieCard
+                        key={movie.id}
+                        currentUser={null}
+                        data={movie}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>
