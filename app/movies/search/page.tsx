@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 import ClientOnly from "@/app/components/ClientOnly";
 import Container from "@/app/components/Container";
