@@ -4,7 +4,7 @@ import EmptyState from "@/app/components/EmptyState";
 import getSearchResults, {
   ISearchParams,
 } from "@/app/actions/getSearchResults";
-import SearchClient from "./SearchClient";
+import MovieCard from "@/app/components/cards/MovieCard";
 
 interface SearchPageProps {
   searchParams: ISearchParams;
@@ -13,7 +13,7 @@ interface SearchPageProps {
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const results = await getSearchResults(searchParams);
 
-  if (!results) {
+  if (results.length === 0) {
     return (
       <ClientOnly>
         <Container>
@@ -26,7 +26,13 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   return (
     <ClientOnly>
       <Container>
-        <SearchClient movies={results} />
+        <div className="w-full py-24">
+          <div className="w-full grid gap-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+            {results.map((movie: any) => {
+              return <MovieCard key={movie.id} data={movie} />;
+            })}
+          </div>
+        </div>
       </Container>
     </ClientOnly>
   );
