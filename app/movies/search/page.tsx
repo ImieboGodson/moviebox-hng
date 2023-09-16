@@ -1,10 +1,10 @@
 import ClientOnly from "@/app/components/ClientOnly";
 import Container from "@/app/components/Container";
 import EmptyState from "@/app/components/EmptyState";
-import MoviesClient from "../MoviesClient";
 import getSearchResults, {
   ISearchParams,
 } from "@/app/actions/getSearchResults";
+import SearchClient from "./SearchClient";
 
 interface SearchPageProps {
   searchParams: ISearchParams;
@@ -26,7 +26,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   return (
     <ClientOnly>
       <Container>
-        <MoviesClient movies={results} />
+        <SearchClient movies={results} />
       </Container>
     </ClientOnly>
   );

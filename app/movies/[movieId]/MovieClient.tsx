@@ -154,27 +154,35 @@ const MovieClient: React.FC<MovieClientProps> = ({ data }) => {
                     )}
                   </div>
                 )}
-                <div className="flex flex-row gap-1 items-center">
-                  <div className="text-base text-neutral-600">Stars :</div>
-                  <div
-                    key={data.credits.cast[0].id}
-                    className="text-base text-rose-700"
-                  >
-                    {data.credits.cast[0].name},
+                {data.credits && (
+                  <div className="flex flex-row gap-1 items-center">
+                    <div className="text-base text-neutral-600">Stars :</div>
+                    {data.credits.cast && (
+                      <div
+                        key={data.credits.cast[0].id}
+                        className="text-base text-rose-700"
+                      >
+                        {data.credits.cast[0].name},
+                      </div>
+                    )}
+                    {data.credits.cast[1] && (
+                      <div
+                        key={data.credits.cast[1].id}
+                        className="text-base text-rose-700"
+                      >
+                        {data.credits.cast[1].name},
+                      </div>
+                    )}
+                    {data.credits.cast[2] && (
+                      <div
+                        key={data.credits.cast[2].id}
+                        className="text-base text-rose-700"
+                      >
+                        {data.credits.cast[2].name}
+                      </div>
+                    )}
                   </div>
-                  <div
-                    key={data.credits.cast[1].id}
-                    className="text-base text-rose-700"
-                  >
-                    {data.credits.cast[1].name},
-                  </div>
-                  <div
-                    key={data.credits.cast[2].id}
-                    className="text-base text-rose-700"
-                  >
-                    {data.credits.cast[2].name}
-                  </div>
-                </div>
+                )}
               </div>
               <div className="relative w-full border p-2 flex flex-row items-center rounded-lg cursor-pointer">
                 <div className="absolute -top-1 -left-1 -bottom-1 px-3 flex flex-row justify-center items-center text-sm text-white bg-rose-700 rounded-lg">
