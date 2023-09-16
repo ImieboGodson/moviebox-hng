@@ -1,13 +1,16 @@
-// import { results } from "@/db.json";
+import { Suspense } from "react";
+
+import getTopRatedMovies from "../actions/getTopRatedMovies";
 import ClientOnly from "../components/ClientOnly";
 import Container from "../components/Container";
 import EmptyState from "../components/EmptyState";
-import MoviesClient from "./MoviesClient";
+import MovieCard from "../components/cards/MovieCard";
+import Loading from "../loading";
 
-export default function MoviesPage() {
-  const results: any = [];
+export default async function MoviesPage() {
+  const movies = (await getTopRatedMovies()).all;
 
-  if (!results) {
+  if (!movies) {
     return (
       <ClientOnly>
         <Container>
@@ -17,10 +20,16 @@ export default function MoviesPage() {
     );
   }
   return (
-    <ClientOnly>
+    <Suspense fallback={<Loading />}>
       <Container>
-        <MoviesClient movies={results} />
+        <div className="w-full py-24">
+          <div className="w-full grid gap-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+            {movies.map((movie: any) => {
+              return <MovieCard key={movie.id} data={movie} />;
+            })}
+          </div>
+        </div>
       </Container>
-    </ClientOnly>
+    </Suspense>
   );
 }

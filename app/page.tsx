@@ -1,19 +1,20 @@
+import { Suspense } from "react";
 import getPopularMovies from "./actions/getPopularMovies";
 import getTopRatedMovies from "./actions/getTopRatedMovies";
-import ClientOnly from "./components/ClientOnly";
 import HomeClient from "./HomeClient";
+import Loading from "./loading";
 
 const Home = async () => {
-  const topRatedMovies = await getTopRatedMovies();
+  const topRatedMovies = (await getTopRatedMovies()).topTen;
   const popularMovies = await getPopularMovies();
 
   return (
-    <ClientOnly>
+    <Suspense fallback={<Loading />}>
       <HomeClient
         topRatedMovies={topRatedMovies}
         popularMovies={popularMovies}
       />
-    </ClientOnly>
+    </Suspense>
   );
 };
 

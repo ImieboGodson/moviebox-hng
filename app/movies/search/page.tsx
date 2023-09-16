@@ -28,19 +28,17 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   }
 
   return (
-    <ClientOnly>
+    <Suspense fallback={<Loading />}>
       <Container>
         <div className="w-full py-24">
-          <Suspense fallback={<Loading />}>
-            <div className="w-full grid gap-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-              {results.map((movie: any) => {
-                return <MovieCard key={movie.id} data={movie} />;
-              })}
-            </div>
-          </Suspense>
+          <div className="w-full grid gap-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+            {results.map((movie: any) => {
+              return <MovieCard key={movie.id} data={movie} />;
+            })}
+          </div>
         </div>
       </Container>
-    </ClientOnly>
+    </Suspense>
   );
 };
 
